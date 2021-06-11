@@ -1,18 +1,30 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import styled from "styled-components";
-import { Input } from "../components/inputs/Input";
-import { SubmitButton } from "../components/inputs/SubmitButton";
-import { useCustomRegister } from "../components/utils/CustomRegister";
+
+import { Input } from "../components/common/Input";
+import { SubmitButton } from "../components/common/SubmitButton";
+import { useCustomRegister } from "../components/utils/UseCustomRegister";
+import Logo from "../../assets/images/3.png";
 
 export const Register = () => {
-  const { data, handleChange, handleSubmit } = useCustomRegister();
+  const { data, error, handleChange, handleSubmit } = useCustomRegister();
 
   return (
     <RegisterPage>
       <RegisterContainer>
+        <ImageContainer>
+          <Link to="/">
+            <img src={Logo} alt="logo" />
+          </Link>
+        </ImageContainer>
         <Title>
           <h2>Inscrivez-vous !</h2>
         </Title>
+        <span style={{ color: "red", alignItems: "center" }}>
+          {error && error}
+        </span>
         <form onSubmit={handleSubmit}>
           <Input
             text={"Email"}
@@ -54,4 +66,14 @@ const RegisterContainer = styled.div`
 const Title = styled.div`
   display: flex;
   justify-content: center;
+`;
+
+const ImageContainer = styled.div`
+  height: 12vh;
+  display: flex;
+  justify-content: center;
+  & img {
+    height: 100%;
+    width: auto;
+  }
 `;

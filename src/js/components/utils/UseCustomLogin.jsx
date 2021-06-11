@@ -1,11 +1,14 @@
 import { useState } from "react";
-import axios from "axios";
+import { useHistory } from "react-router";
+import api from "../../../utils/api";
 
 export const useCustomLogin = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+
+  const [error, setError] = useState(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -15,24 +18,30 @@ export const useCustomLogin = () => {
     }));
   };
 
+  const history = useHistory();
+
   const handleSubmit = async (event) => {
+    console.log("Here");
+    setError(null);
     try {
       event.preventDefault();
       setData({
         ...data,
       });
-      const result = await axios.post(
-        `http://localhost:4000/api/v1/users/login`,
-        data
-      );
-      if (result.status === 200) {
+      const result = await api.post(`users/login`, data);
+      console.log("Result", result.data);
+      if (result.status === 201) {
         console.log("Result", result.status);
-        return alert("Vous êtes connectés !");
+        setError(null);
+        history.push("/");
+        // return alert("Vous êtes connectés !");
       }
     } catch (error) {
+      console.log("ERROR", error.response);
       setData({
         ...data,
       });
+      setError(error.response.data);
     }
   };
 
@@ -40,5 +49,6 @@ export const useCustomLogin = () => {
     handleSubmit,
     handleChange,
     data,
+    error,
   };
 };

@@ -1,17 +1,29 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import styled from "styled-components";
-import { Input } from "../components/inputs/Input";
-import { SubmitButton } from "../components/inputs/SubmitButton";
+
+import { Input } from "../components/common/Input";
+import { SubmitButton } from "../components/common/SubmitButton";
 import { useCustomLogin } from "../components/utils/UseCustomLogin";
+import Logo from "../../assets/images/3.png";
 
 export const Login = () => {
-  const { data, handleChange, handleSubmit } = useCustomLogin();
+  const { data, error, handleChange, handleSubmit } = useCustomLogin();
   return (
     <LoginPage>
       <LoginContainer>
+        <ImageContainer>
+          <Link to="/">
+            <img src={Logo} alt="logo" />
+          </Link>
+        </ImageContainer>
         <Title>
           <h2>Connectez-vous !</h2>
         </Title>
+        <span style={{ color: "red", alignItems: "center" }}>
+          {error && error}
+        </span>
         <form onSubmit={handleSubmit}>
           <Input
             text={"Email"}
@@ -53,4 +65,14 @@ const LoginContainer = styled.div`
 const Title = styled.div`
   display: flex;
   justify-content: center;
+`;
+
+const ImageContainer = styled.div`
+  height: 12vh;
+  display: flex;
+  justify-content: center;
+  & img {
+    height: 100%;
+    width: auto;
+  }
 `;

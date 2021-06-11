@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { NavButton } from "./inputs/NavButton";
+import { NavButton } from "./common/NavButton";
 
 export const NavBar = () => {
   return (
